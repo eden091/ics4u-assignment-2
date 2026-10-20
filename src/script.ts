@@ -1,3 +1,17 @@
+import type { Coefficients } from "./types";
+
+const form = document.getElementById("form");
+const aValue = documentgetElementsByName("a");
+
+const coeff : Coefficients = {
+  a: 1,
+  b: 2,
+  c: 3,
+  d: 4
+};
+
+console.log(coeff)
+
 import { drawGraph } from "@ics4u-assignment-02/utils";
 
 const canvas = document.getElementById("graph") as HTMLCanvasElement;
