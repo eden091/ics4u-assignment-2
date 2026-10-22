@@ -26,7 +26,12 @@
     "sourcepath",
     "tdsb",
     "tmdb",
-    "vite"
+    "vite",
+    "aCoeff",
+    "bCoeff",
+    "cCoeff",
+    "dCoeff",
+    "coeff"
   ],
   "ignorePaths": [
     "**/.devcontainer/**",

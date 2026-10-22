@@ -1,16 +1,29 @@
-import type { Coefficients } from "./types";
+import type { Coefficients } from "@ics4u-assignment-02/types";
 
 const form = document.getElementById("form");
-const aValue = documentgetElementsByName("a");
 
-const coeff : Coefficients = {
-  a: 1,
-  b: 2,
-  c: 3,
-  d: 4
-};
+form?.addEventListener("input", (event) => {
+  event.preventDefault();
 
-console.log(coeff)
+  const aValue = document.getElementsByName("a")[0] as HTMLInputElement;
+  const aCoeff = aValue.valueAsNumber;
+  const bValue = document.getElementsByName("b")[0] as HTMLInputElement;
+  const bCoeff = bValue.valueAsNumber;
+  const cValue = document.getElementsByName("c")[0] as HTMLInputElement;
+  const cCoeff = cValue.valueAsNumber;
+  const dValue = document.getElementsByName("d")[0] as HTMLInputElement;
+  const dCoeff = dValue.valueAsNumber;
+
+  const coeff: Coefficients = {
+    a: aCoeff,
+    b: bCoeff,
+    c: cCoeff,
+    d: dCoeff
+  };
+
+  console.log(coeff);
+})
+
 
 import { drawGraph } from "@ics4u-assignment-02/utils";
 
