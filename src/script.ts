@@ -20,8 +20,6 @@ form.addEventListener("input", (event) => {
   console.log(coeff);
 })
 
-
-
 import { drawGraph } from "@ics4u-assignment-02/utils";
 
 const canvas = document.getElementById("graph") as HTMLCanvasElement;
