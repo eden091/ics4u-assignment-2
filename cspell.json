@@ -27,10 +27,6 @@
     "tdsb",
     "tmdb",
     "vite",
-    "aCoeff",
-    "bCoeff",
-    "cCoeff",
-    "dCoeff",
     "coeff"
   ],
   "ignorePaths": [
