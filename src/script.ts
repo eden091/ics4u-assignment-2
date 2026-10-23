@@ -1,6 +1,6 @@
-import type { Coefficients } from "@ics4u-assignment-02/types";
-
 const form = document.getElementById("form") as HTMLElement;
+const parameter1 = document.getElementById("p") as HTMLSpanElement;
+const parameter2 = document.getElementById("q") as HTMLSpanElement;
 
 form.addEventListener("input", (event) => {
   event.preventDefault();
@@ -10,15 +10,12 @@ form.addEventListener("input", (event) => {
   const cValue = (document.getElementsByName("c")[0] as HTMLInputElement).valueAsNumber;
   const dValue = (document.getElementsByName("d")[0] as HTMLInputElement).valueAsNumber;
 
-  const coeff: Coefficients = {
-    a: aValue,
-    b: bValue,
-    c: cValue,
-    d: dValue
-  }
+  const p = (3 * aValue * cValue - bValue * bValue) / (3 * aValue * aValue);
+  const q = (27 * aValue * aValue * dValue - 9 * aValue * bValue * cValue + 2 * bValue ** 3) / (27 * aValue ** 3);
 
-  console.log(coeff);
-})
+  parameter1.textContent = p.toString();
+  parameter2.textContent = q.toString();
+});
 
 import { drawGraph } from "@ics4u-assignment-02/utils";
 
