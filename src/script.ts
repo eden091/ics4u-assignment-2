@@ -1,6 +1,7 @@
 const form = document.getElementById("form") as HTMLElement;
 const parameter1 = document.getElementById("p") as HTMLSpanElement;
 const parameter2 = document.getElementById("q") as HTMLSpanElement;
+const discriminant = document.getElementById("discriminant") as HTMLSpanElement;
 
 form.addEventListener("input", (event) => {
   event.preventDefault();
@@ -15,6 +16,11 @@ form.addEventListener("input", (event) => {
 
   parameter1.textContent = p.toString();
   parameter2.textContent = q.toString();
+
+  
+  const d = (q / 2) * (q / 2) + (p / 3) ** 3;
+
+  discriminant.textContent = d.toString();
 });
 
 import { drawGraph } from "@ics4u-assignment-02/utils";
