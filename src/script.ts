@@ -55,8 +55,8 @@ form.addEventListener("input", (event) => {
   }
 
   //case c : triple root and double root
-  if (dis == 0) {
-    
+  if (dis === 0) {
+    if (q === 0 && p === 0)
   }
 });
 
