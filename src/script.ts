@@ -50,14 +50,42 @@ form.addEventListener("input", (event) => {
     const x = y - b / (3 * a);
 
     root1.textContent = `x: ${x.toString()} | y: 0.0000`;
-    root2.textContent = "x: Imaginary | y: Imaginary";
-    root3.textContent = "x: Imaginary | y: Imaginary";
+    root2.textContent = `x: Imaginary | y: Imaginary`;
+    root3.textContent = `x: Imaginary | y: Imaginary`;
   }
 
   //case c : triple root and double root
   if (dis === 0) {
-    if (q === 0 && p === 0)
+    if (p === q && q === 0) {
+      const u = Math.cbrt(-q / 2 + Math.sqrt((q / 2) ** 2 + (p / 3) ** 3));
+      const v = Math.cbrt(-q / 2 - Math.sqrt((q / 2) ** 2 + (p / 3) ** 3));
+      const y = u + v;
+      const x = y - b / (3 * a);
+
+      root1.textContent = `x: ${x.toString()} | y: 0.0000`;
+      root2.textContent = `x: ${x.toString()} | y: 0.0000`;
+      root3.textContent = `x: ${x.toString()} | y: 0.0000`;
+    }
+
+    if (p !== 0) {
+      const u = Math.cbrt(-q / 2 + Math.sqrt((q / 2) ** 2 + (p / 3) ** 3));
+      const v = Math.cbrt(-q / 2 - Math.sqrt((q / 2) ** 2 + (p / 3) ** 3));
+      const y = u + v;
+      const x = y - b / (3 * a);
+
+      root1.textContent = `x: ${x.toString()} | y: 0.0000`;
+
+      const r = -Math.cbrt(4 * q);
+      const x2 = r - b / (3 * a);
+
+      root2.textContent = `x: ${x2.toString()} | y: 0.0000`;
+      root3.textContent = `x: ${x2.toString()} | y: 0.0000`;
+
+    }
   }
+
+
+  
 });
 
 import { drawGraph } from "@ics4u-assignment-02/utils";
