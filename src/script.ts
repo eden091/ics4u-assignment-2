@@ -14,6 +14,8 @@ form.addEventListener("input", (event) => {
   const root1 = document.getElementById("root-one") as HTMLSpanElement;
   const root2 = document.getElementById("root-two") as HTMLSpanElement;
   const root3 = document.getElementById("root-three") as HTMLSpanElement;
+  const equation = document.getElementById("equation") as HTMLSpanElement;
+  const firstDer = document.getElementById("first-derivative") as HTMLSpanElement;
 
   //parameters
   const p = (3 * a * c - b * b) / (3 * a * a);
@@ -23,7 +25,7 @@ form.addEventListener("input", (event) => {
   parameter2.textContent = q.toString();
 
   //discriminant
-  const dis = (q / 2) * (q / 2) + (p / 3) ** 3;
+  const dis = (q / 2) ** 2 + (p / 3) ** 3;
 
   discriminant.textContent = d.toString();
 
@@ -74,18 +76,21 @@ form.addEventListener("input", (event) => {
       const x = y - b / (3 * a);
 
       root1.textContent = `x: ${x.toString()} | y: 0.0000`;
+      root2.textContent = `x: ${x.toString()} | y: 0.0000`;
 
       const r = -Math.cbrt(4 * q);
       const x2 = r - b / (3 * a);
 
-      root2.textContent = `x: ${x2.toString()} | y: 0.0000`;
       root3.textContent = `x: ${x2.toString()} | y: 0.0000`;
-
     }
   }
 
+  //equation of cubic funciton
+  equation.textContent = `${a}x³ + ${b}x² + ${c}x + ${d}`;
 
-  
+  //first derivative
+  //function
+  firstDer.textContent;
 });
 
 import { drawGraph } from "@ics4u-assignment-02/utils";
