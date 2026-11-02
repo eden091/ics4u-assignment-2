@@ -1,3 +1,5 @@
+import { drawGraph } from "@ics4u-assignment-02/utils";
+
 const form = document.getElementById("form") as HTMLElement;
 
 form.addEventListener("input", (event) => {
@@ -85,24 +87,28 @@ form.addEventListener("input", (event) => {
     }
   }
 
-  //equation of cubic funciton
+  //equation of cubic function
   equation.textContent = `${a}x³ + ${b}x² + ${c}x + ${d}`;
 
   //first derivative
-  //function
-  firstDer.textContent;
+  function derivative (a, b, c) {
+    const aValue = a * 3;
+    const bValue = b * 2;
+    const cValue = c;
+    const firstDerivative = `${aValue}x² + ${bValue}x + ${cValue}`;
+
+    firstDer.textContent = firstDerivative;
+  }
+
+  const canvas = document.getElementById("graph") as HTMLCanvasElement;
+
+  drawGraph(
+    { a: a, b: b, c: c, d: d },
+    {
+      r1: { x: root1.textContent, y: 0 },
+      r2: { x: root2.textContent, y: 0 },
+      r3: { x: root3.textContent, y: 0 },
+    },
+    canvas,
+  );
 });
-
-import { drawGraph } from "@ics4u-assignment-02/utils";
-
-const canvas = document.getElementById("graph") as HTMLCanvasElement;
-
-drawGraph(
-  { a: 0, b: 0, c: 0, d: 0 },
-  {
-    r1: { x: 0, y: 0 },
-    r2: { x: 0, y: 0 },
-    r3: { x: 0, y: 0 },
-  },
-  canvas,
-);
