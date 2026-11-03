@@ -10,17 +10,16 @@ const inputD = document.getElementsByName("d")[0] as HTMLInputElement;
 const parameter1 = document.getElementById("p") as HTMLSpanElement;
 const parameter2 = document.getElementById("q") as HTMLSpanElement;
 const discriminant = document.getElementById("discriminant") as HTMLSpanElement;
-
 const root1 = document.getElementById("root-one") as HTMLSpanElement;
 const root2 = document.getElementById("root-two") as HTMLSpanElement;
 const root3 = document.getElementById("root-three") as HTMLSpanElement;
-const root = document.getElementById("roots") as HTMLSpanElement;
 const minimum = document.getElementById("minimum") as HTMLSpanElement;
 const maximum = document.getElementById("maximum") as HTMLSpanElement;
 
 const equation = document.getElementById("equation") as HTMLSpanElement;
 const firstDer = document.getElementById("first-derivative") as HTMLSpanElement;
 const secondDer = document.getElementById("second-derivative") as HTMLSpanElement;
+const root = document.getElementById("roots") as HTMLSpanElement;
 const factored = document.getElementById("factored") as HTMLSpanElement;
 
 const history = document.getElementById("history") as HTMLDivElement;
