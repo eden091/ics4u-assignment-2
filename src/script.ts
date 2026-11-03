@@ -106,13 +106,11 @@ function calculate() {
 
       const y = u + v;
       const x = y - b / (3 * a);
-
-      root1.textContent = `x: ${x.toString()} | y: 0.0000`;
-      root2.textContent = `x: ${x.toString()} | y: 0.0000`;
-
       const x2 = -u - b / (3 * a);
 
-      root3.textContent = `x: ${x2.toString()} | y: 0.0000`;
+      root1.textContent = `x: ${x2.toString()} | y: 0.0000`;
+      root2.textContent = `x: ${x2.toString()} | y: 0.0000`;
+      root3.textContent = `x: ${x.toString()} | y: 0.0000`;
 
       root.textContent = "Double Real Roots, Single Real Root";
     }
