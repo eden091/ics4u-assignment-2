@@ -14,13 +14,14 @@ const discriminant = document.getElementById("discriminant") as HTMLSpanElement;
 const root1 = document.getElementById("root-one") as HTMLSpanElement;
 const root2 = document.getElementById("root-two") as HTMLSpanElement;
 const root3 = document.getElementById("root-three") as HTMLSpanElement;
-const root = document.getElementById("root") as HTMLSpanElement;
+const root = document.getElementById("roots") as HTMLSpanElement;
 const minimum = document.getElementById("minimum") as HTMLSpanElement;
 const maximum = document.getElementById("maximum") as HTMLSpanElement;
 
 const equation = document.getElementById("equation") as HTMLSpanElement;
 const firstDer = document.getElementById("first-derivative") as HTMLSpanElement;
 const secondDer = document.getElementById("second-derivative") as HTMLSpanElement;
+const factored = document.getElementById("factored") as HTMLSpanElement;
 
 const history = document.getElementById("history") as HTMLDivElement;
 
@@ -167,6 +168,66 @@ function minMaxPoints() {
   }
 }
 
+function factoredForm() {
+  const { a, b, c, d } = getCoefficients();
+
+  if (a === 0) {
+    factored.textContent = "No real factorization";
+    return;
+  }
+
+  const p = (3 * a * c - b ** 2) / (3 * a ** 2);
+  const q = (27 * a ** 2 * d - 9 * a * b * c + 2 * b ** 3) / (27 * a ** 3);
+  const dis = (q / 2) ** 2 + (p / 3) ** 3;
+
+  function formatFactor(x: number) {
+    if (x < 0) {
+      return `(x + ${Math.abs(x).toFixed(4)})`;
+    }
+    return `(x - ${x.toFixed(4)})`;
+  }
+
+  if (dis < 0) {
+    const theta = Math.acos(-q / (2 * Math.sqrt((-p / 3) ** 3))) / 3;
+
+    const y1 = 2 * Math.sqrt(-p / 3) * Math.cos(theta);
+    const y2 = 2 * Math.sqrt(-p / 3) * Math.cos(theta + (2 * Math.PI) / 3);
+    const y3 = 2 * Math.sqrt(-p / 3) * Math.cos(theta + (4 * Math.PI) / 3);
+
+    const x1 = y1 - b / (3 * a);
+    const x2 = y2 - b / (3 * a);
+    const x3 = y3 - b / (3 * a);
+
+    factored.textContent = `${a}${formatFactor(x1)}${formatFactor(x2)}${formatFactor(x3)}`;
+  }
+
+  else if (dis > 0) {
+    const u = Math.cbrt(-q / 2 + Math.sqrt(dis));
+    const v = Math.cbrt(-q / 2 - Math.sqrt(dis));
+
+    const x = u + v - b / (3 * a);
+
+    const quadraticB = b / a + x;
+    const quadraticC = -d / (a * x);
+
+    factored.textContent = `${a}${formatFactor(x)}(x² + ${quadraticB.toFixed(4)}x + ${quadraticC.toFixed(4)})`;
+  }
+
+  else {
+    if (p === 0 && q === 0) {
+      const x = -b / (3 * a);
+
+      factored.textContent = `${a}${formatFactor(x)}³`;
+    } else {
+      const u = Math.cbrt(-q / 2);
+      const x1 = 2 * u - b / (3 * a);
+      const x2 = -u - b / (3 * a);
+
+      factored.textContent = `${a}${formatFactor(x1)}²${formatFactor(x2)}`;
+    }
+  }
+}
+
 function saveCoefficients() {
   const { a, b, c, d } = getCoefficients();
 
@@ -182,6 +243,10 @@ function saveCoefficients() {
     const coefficient = document.createElement("span");
     coefficient.textContent = coeff.toString();
     memory.appendChild(coefficient);
+  });
+
+  memory.addEventListener("click", () => {
+    loadCoefficients(a, b, c, d);
   });
 
   const deleteButton = document.createElement("button");
@@ -215,23 +280,34 @@ function drawCubicGraph() {
   );
 }
 
-//update
 form.addEventListener("input", (event) => {
   event.preventDefault();
 
+  factoredForm();
   drawCubicGraph();
   minMaxPoints();
   derivatives();
   calculate();
 });
 
-//save button
 function saveButton() {
   form.addEventListener("submit", (event) => {
     event.preventDefault();
-    
+
     saveCoefficients();
   });
 }
-
 saveButton();
+
+function loadCoefficients (a: number, b: number, c: number, d: number) {
+  inputA.value = a.toString();
+  inputB.value = b.toString();
+  inputC.value = c.toString();
+  inputD.value = d.toString();
+
+  factoredForm();
+  drawCubicGraph();
+  minMaxPoints();
+  derivatives();
+  calculate();
+}
