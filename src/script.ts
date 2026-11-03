@@ -198,9 +198,7 @@ function factoredForm() {
     const x3 = y3 - b / (3 * a);
 
     factored.textContent = `${a}${formatFactor(x1)}${formatFactor(x2)}${formatFactor(x3)}`;
-  }
-
-  else if (dis > 0) {
+  } else if (dis > 0) {
     const u = Math.cbrt(-q / 2 + Math.sqrt(dis));
     const v = Math.cbrt(-q / 2 - Math.sqrt(dis));
 
@@ -210,9 +208,7 @@ function factoredForm() {
     const quadraticC = -d / (a * x);
 
     factored.textContent = `${a}${formatFactor(x)}(x² + ${quadraticB.toFixed(4)}x + ${quadraticC.toFixed(4)})`;
-  }
-
-  else {
+  } else {
     if (p === 0 && q === 0) {
       const x = -b / (3 * a);
 
@@ -282,11 +278,11 @@ function drawCubicGraph() {
 form.addEventListener("input", (event) => {
   event.preventDefault();
 
+  calculate();
+  derivatives();
+  minMaxPoints();
   factoredForm();
   drawCubicGraph();
-  minMaxPoints();
-  derivatives();
-  calculate();
 });
 
 function saveButton() {
@@ -298,15 +294,15 @@ function saveButton() {
 }
 saveButton();
 
-function loadCoefficients (a: number, b: number, c: number, d: number) {
+function loadCoefficients(a: number, b: number, c: number, d: number) {
   inputA.value = a.toString();
   inputB.value = b.toString();
   inputC.value = c.toString();
   inputD.value = d.toString();
 
+  calculate();
+  derivatives();
+  minMaxPoints();
   factoredForm();
   drawCubicGraph();
-  minMaxPoints();
-  derivatives();
-  calculate();
 }
