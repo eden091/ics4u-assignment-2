@@ -20,7 +20,7 @@ const equation = document.getElementById("equation") as HTMLSpanElement;
 const firstDer = document.getElementById("first-derivative") as HTMLSpanElement;
 const secondDer = document.getElementById("second-derivative") as HTMLSpanElement;
 const root = document.getElementById("roots") as HTMLSpanElement;
-const factored = document.getElementById("factored") as HTMLSpanElement;
+const factor = document.getElementById("factored") as HTMLSpanElement;
 
 const history = document.getElementById("history") as HTMLDivElement;
 
@@ -35,21 +35,26 @@ function getCoefficients() {
   return { a, b, c, d };
 }
 
+function formatNumber(value: number) {
+  return Number(value.toFixed(4)).toFixed(4);
+}
+
 function calculate() {
   const { a, b, c, d } = getCoefficients();
 
   const p = (3 * a * c - b * b) / (3 * a * a);
   const q = (27 * a * a * d - 9 * a * b * c + 2 * b ** 3) / (27 * a ** 3);
 
-  parameter1.textContent = p.toString();
-  parameter2.textContent = q.toString();
+  parameter1.textContent = formatNumber(p);
+  parameter2.textContent = formatNumber(q);
 
   const dis = (q / 2) ** 2 + (p / 3) ** 3;
 
-  discriminant.textContent = dis.toString();
+  const roundedDis = Number(dis.toFixed(10));
 
-  //case a : 3 distinct real roots
-  if (dis < 0) {
+  discriminant.textContent = formatNumber(dis);
+
+  if (roundedDis < 0) {
     const theta = (1 / 3) * Math.acos(-q / (2 * Math.sqrt((-p / 3) ** 3)));
 
     const y1 = 2 * Math.sqrt(-p / 3) * Math.cos(theta);
@@ -60,57 +65,47 @@ function calculate() {
     const x2 = y2 - b / (3 * a);
     const x3 = y3 - b / (3 * a);
 
-    root1.textContent = `x: ${x1.toString()} | y: 0.0000`;
-    root2.textContent = `x: ${x2.toString()} | y: 0.0000`;
-    root3.textContent = `x: ${x3.toString()} | y: 0.0000`;
+    root1.textContent = `x: ${formatNumber(x1)} | y: 0.0000`;
+    root2.textContent = `x: ${formatNumber(x2)} | y: 0.0000`;
+    root3.textContent = `x: ${formatNumber(x3)} | y: 0.0000`;
 
     root.textContent = "3 Distinct Real Roots";
-  }
-
-  //case b : 1 real root and 2 complex roots
-  if (dis > 0) {
+  } else if (roundedDis > 0) {
     const u = Math.cbrt(-q / 2 + Math.sqrt((q / 2) ** 2 + (p / 3) ** 3));
     const v = Math.cbrt(-q / 2 - Math.sqrt((q / 2) ** 2 + (p / 3) ** 3));
 
     const y = u + v;
     const x = y - b / (3 * a);
 
-    root1.textContent = `x: ${x.toString()} | y: 0.0000`;
+    root1.textContent = `x: ${formatNumber(x)} | y: 0.0000`;
     root2.textContent = `x: Imaginary | y: Imaginary`;
     root3.textContent = `x: Imaginary | y: Imaginary`;
 
     root.textContent = "1 Real Root, 2 Complex Roots";
-  }
-
-  //case c : triple root and double root
-  if (dis === 0) {
-    //triple root
-    if (p === 0 && q === 0) {
-      const u = Math.cbrt(-q / 2 + Math.sqrt((q / 2) ** 2 + (p / 3) ** 3));
-      const v = Math.cbrt(-q / 2 - Math.sqrt((q / 2) ** 2 + (p / 3) ** 3));
+  } else {
+    if (Math.abs(p) < 1e-7 && Math.abs(q) < 1e-7) {
+      const u = Math.cbrt(-q / 2 + Math.sqrt(Math.max(0, (q / 2) ** 2 + (p / 3) ** 3)));
+      const v = Math.cbrt(-q / 2 - Math.sqrt(Math.max(0, (q / 2) ** 2 + (p / 3) ** 3)));
 
       const y = u + v;
       const x = y - b / (3 * a);
 
-      root1.textContent = `x: ${x.toString()} | y: 0.0000`;
-      root2.textContent = `x: ${x.toString()} | y: 0.0000`;
-      root3.textContent = `x: ${x.toString()} | y: 0.0000`;
+      root1.textContent = `x: ${formatNumber(x)} | y: 0.0000`;
+      root2.textContent = `x: ${formatNumber(x)} | y: 0.0000`;
+      root3.textContent = `x: ${formatNumber(x)} | y: 0.0000`;
 
       root.textContent = "Triple Real Roots";
-    }
-
-    //double root and single root
-    if (p !== 0) {
-      const u = Math.cbrt(-q / 2 + Math.sqrt((q / 2) ** 2 + (p / 3) ** 3));
-      const v = Math.cbrt(-q / 2 - Math.sqrt((q / 2) ** 2 + (p / 3) ** 3));
+    } else {
+      const u = Math.cbrt(-q / 2 + Math.sqrt(Math.max(0, (q / 2) ** 2 + (p / 3) ** 3)));
+      const v = Math.cbrt(-q / 2 - Math.sqrt(Math.max(0, (q / 2) ** 2 + (p / 3) ** 3)));
 
       const y = u + v;
       const x = y - b / (3 * a);
       const x2 = -u - b / (3 * a);
 
-      root1.textContent = `x: ${x2.toString()} | y: 0.0000`;
-      root2.textContent = `x: ${x2.toString()} | y: 0.0000`;
-      root3.textContent = `x: ${x.toString()} | y: 0.0000`;
+      root1.textContent = `x: ${formatNumber(x2)} | y: 0.0000`;
+      root2.textContent = `x: ${formatNumber(x2)} | y: 0.0000`;
+      root3.textContent = `x: ${formatNumber(x)} | y: 0.0000`;
 
       root.textContent = "Double Real Roots, Single Real Root";
     }
@@ -126,14 +121,14 @@ function derivatives() {
   const bValue1 = b * 2;
   const cValue1 = c;
 
-  const firstDerivative = `${aValue1}x² + ${bValue1}x + ${cValue1}`;
+  const firstDerivative = `${formatNumber(aValue1)}x² + ${formatNumber(bValue1)}x + ${formatNumber(cValue1)}`;
 
   firstDer.textContent = firstDerivative;
 
   const aValue2 = aValue1 * 2;
   const bValue2 = bValue1;
 
-  const secondDerivative = `${aValue2}x + ${bValue2}`;
+  const secondDerivative = `${formatNumber(aValue2)}x + ${formatNumber(bValue2)}`;
 
   secondDer.textContent = secondDerivative;
 }
@@ -157,11 +152,11 @@ function minMaxPoints() {
   const secondDerivative = 6 * a * x1 + 2 * b;
 
   if (secondDerivative < 0) {
-    maximum.textContent = `(${x1.toFixed(4)}, ${y1.toFixed(4)})`;
-    minimum.textContent = `(${x2.toFixed(4)}, ${y2.toFixed(4)})`;
+    maximum.textContent = `(${formatNumber(x1)}, ${formatNumber(y1)})`;
+    minimum.textContent = `(${formatNumber(x2)}, ${formatNumber(y2)})`;
   } else {
-    maximum.textContent = `(${x2.toFixed(4)}, ${y2.toFixed(4)})`;
-    minimum.textContent = `(${x1.toFixed(4)}, ${y1.toFixed(4)})`;
+    maximum.textContent = `(${formatNumber(x2)}, ${formatNumber(y2)})`;
+    minimum.textContent = `(${formatNumber(x1)}, ${formatNumber(y1)})`;
   }
 }
 
@@ -169,7 +164,7 @@ function factoredForm() {
   const { a, b, c, d } = getCoefficients();
 
   if (a === 0) {
-    factored.textContent = "Not a cubic (a = 0)";
+    factor.textContent = "No real factorization";
     return;
   }
 
@@ -197,7 +192,7 @@ function factoredForm() {
 
     return `${sign} ${Math.abs(rounded).toFixed(4)}${variable}`;
   }
-
+  
   if (dis < 0) {
     const theta = Math.acos(-q / (2 * Math.sqrt((-p / 3) ** 3))) / 3;
 
@@ -209,7 +204,7 @@ function factoredForm() {
     const x2 = y2 - b / (3 * a);
     const x3 = y3 - b / (3 * a);
 
-    factored.textContent = `${a}${formatFactor(x1)}${formatFactor(x2)}${formatFactor(x3)}`;
+    factor.textContent = `${a}${formatFactor(x1)}${formatFactor(x2)}${formatFactor(x3)}`;
   } else if (dis > 0) {
     const u = Math.cbrt(-q / 2 + Math.sqrt(dis));
     const v = Math.cbrt(-q / 2 - Math.sqrt(dis));
@@ -219,19 +214,19 @@ function factoredForm() {
     const quadraticB = b / a + x;
     const quadraticC = c / a + (b / a) * x + x ** 2;
 
-    factored.textContent = `${a}${formatFactor(x)}(x² ${formatTerm(quadraticB, "x")} ${formatTerm(quadraticC, "")})`;
+    factor.textContent = `${a}${formatFactor(x)}(x² ${formatTerm(quadraticB, "x")} ${formatTerm(quadraticC, "")})`;
   } else {
     if (p === 0 && q === 0) {
       const x = -b / (3 * a);
 
-      factored.textContent = `${a}${formatFactor(x)}³`;
+      factor.textContent = `${a}${formatFactor(x)}³`;
     } else {
       const u = Math.cbrt(-q / 2);
 
       const doubleRoot = -u - b / (3 * a);
       const singleRoot = 2 * u - b / (3 * a);
 
-      factored.textContent = `${a}${formatFactor(doubleRoot)}²${formatFactor(singleRoot)}`;
+      factor.textContent = `${a}${formatFactor(doubleRoot)}²${formatFactor(singleRoot)}`;
     }
   }
 }
@@ -249,7 +244,7 @@ function saveCoefficients() {
 
   [a, b, c, d].forEach((coeff) => {
     const coefficient = document.createElement("span");
-    coefficient.textContent = coeff.toString();
+    coefficient.textContent = formatNumber(coeff);
     memory.appendChild(coefficient);
   });
 
