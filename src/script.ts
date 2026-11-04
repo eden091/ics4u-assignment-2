@@ -83,7 +83,7 @@ function calculate() {
 
     root.textContent = "1 Real Root, 2 Complex Roots";
   } else {
-    if (Math.abs(p) < 1e-7 && Math.abs(q) < 1e-7) {
+    if (p === 0 && q === 0) {
       const u = Math.cbrt(-q / 2 + Math.sqrt(Math.max(0, (q / 2) ** 2 + (p / 3) ** 3)));
       const v = Math.cbrt(-q / 2 - Math.sqrt(Math.max(0, (q / 2) ** 2 + (p / 3) ** 3)));
 
@@ -192,7 +192,7 @@ function factoredForm() {
 
     return `${sign} ${Math.abs(rounded).toFixed(4)}${variable}`;
   }
-  
+
   if (dis < 0) {
     const theta = Math.acos(-q / (2 * Math.sqrt((-p / 3) ** 3))) / 3;
 
