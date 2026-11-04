@@ -35,7 +35,7 @@ function getCoefficients() {
   return { a, b, c, d };
 }
 
-function formatNumber(value: number) {
+function round(value: number) {
   return Number(value.toFixed(4)).toFixed(4);
 }
 
@@ -45,14 +45,14 @@ function calculate() {
   const p = (3 * a * c - b * b) / (3 * a * a);
   const q = (27 * a * a * d - 9 * a * b * c + 2 * b ** 3) / (27 * a ** 3);
 
-  parameter1.textContent = formatNumber(p);
-  parameter2.textContent = formatNumber(q);
+  parameter1.textContent = round(p);
+  parameter2.textContent = round(q);
 
   const dis = (q / 2) ** 2 + (p / 3) ** 3;
 
   const roundedDis = Number(dis.toFixed(10));
 
-  discriminant.textContent = formatNumber(dis);
+  discriminant.textContent = round(dis);
 
   if (roundedDis < 0) {
     const theta = (1 / 3) * Math.acos(-q / (2 * Math.sqrt((-p / 3) ** 3)));
@@ -65,9 +65,9 @@ function calculate() {
     const x2 = y2 - b / (3 * a);
     const x3 = y3 - b / (3 * a);
 
-    root1.textContent = `x: ${formatNumber(x1)} | y: 0.0000`;
-    root2.textContent = `x: ${formatNumber(x2)} | y: 0.0000`;
-    root3.textContent = `x: ${formatNumber(x3)} | y: 0.0000`;
+    root1.textContent = `x: ${round(x1)} | y: 0.0000`;
+    root2.textContent = `x: ${round(x2)} | y: 0.0000`;
+    root3.textContent = `x: ${round(x3)} | y: 0.0000`;
 
     root.textContent = "3 Distinct Real Roots";
   } else if (roundedDis > 0) {
@@ -77,7 +77,7 @@ function calculate() {
     const y = u + v;
     const x = y - b / (3 * a);
 
-    root1.textContent = `x: ${formatNumber(x)} | y: 0.0000`;
+    root1.textContent = `x: ${round(x)} | y: 0.0000`;
     root2.textContent = `x: Imaginary | y: Imaginary`;
     root3.textContent = `x: Imaginary | y: Imaginary`;
 
@@ -90,9 +90,9 @@ function calculate() {
       const y = u + v;
       const x = y - b / (3 * a);
 
-      root1.textContent = `x: ${formatNumber(x)} | y: 0.0000`;
-      root2.textContent = `x: ${formatNumber(x)} | y: 0.0000`;
-      root3.textContent = `x: ${formatNumber(x)} | y: 0.0000`;
+      root1.textContent = `x: ${round(x)} | y: 0.0000`;
+      root2.textContent = `x: ${round(x)} | y: 0.0000`;
+      root3.textContent = `x: ${round(x)} | y: 0.0000`;
 
       root.textContent = "Triple Real Roots";
     } else {
@@ -103,9 +103,9 @@ function calculate() {
       const x = y - b / (3 * a);
       const x2 = -u - b / (3 * a);
 
-      root1.textContent = `x: ${formatNumber(x2)} | y: 0.0000`;
-      root2.textContent = `x: ${formatNumber(x2)} | y: 0.0000`;
-      root3.textContent = `x: ${formatNumber(x)} | y: 0.0000`;
+      root1.textContent = `x: ${round(x2)} | y: 0.0000`;
+      root2.textContent = `x: ${round(x2)} | y: 0.0000`;
+      root3.textContent = `x: ${round(x)} | y: 0.0000`;
 
       root.textContent = "Double Real Roots, Single Real Root";
     }
@@ -121,14 +121,14 @@ function derivatives() {
   const bValue1 = b * 2;
   const cValue1 = c;
 
-  const firstDerivative = `${formatNumber(aValue1)}x² + ${formatNumber(bValue1)}x + ${formatNumber(cValue1)}`;
+  const firstDerivative = `${round(aValue1)}x² + ${round(bValue1)}x + ${round(cValue1)}`;
 
   firstDer.textContent = firstDerivative;
 
   const aValue2 = aValue1 * 2;
   const bValue2 = bValue1;
 
-  const secondDerivative = `${formatNumber(aValue2)}x + ${formatNumber(bValue2)}`;
+  const secondDerivative = `${round(aValue2)}x + ${round(bValue2)}`;
 
   secondDer.textContent = secondDerivative;
 }
@@ -152,11 +152,11 @@ function minMaxPoints() {
   const secondDerivative = 6 * a * x1 + 2 * b;
 
   if (secondDerivative < 0) {
-    maximum.textContent = `(${formatNumber(x1)}, ${formatNumber(y1)})`;
-    minimum.textContent = `(${formatNumber(x2)}, ${formatNumber(y2)})`;
+    maximum.textContent = `(${round(x1)}, ${round(y1)})`;
+    minimum.textContent = `(${round(x2)}, ${round(y2)})`;
   } else {
-    maximum.textContent = `(${formatNumber(x2)}, ${formatNumber(y2)})`;
-    minimum.textContent = `(${formatNumber(x1)}, ${formatNumber(y1)})`;
+    maximum.textContent = `(${round(x2)}, ${round(y2)})`;
+    minimum.textContent = `(${round(x1)}, ${round(y1)})`;
   }
 }
 
@@ -244,7 +244,7 @@ function saveCoefficients() {
 
   [a, b, c, d].forEach((coeff) => {
     const coefficient = document.createElement("span");
-    coefficient.textContent = formatNumber(coeff);
+    coefficient.textContent = round(coeff);
     memory.appendChild(coefficient);
   });
 
