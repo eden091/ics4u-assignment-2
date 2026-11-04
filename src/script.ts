@@ -169,7 +169,7 @@ function factoredForm() {
   const { a, b, c, d } = getCoefficients();
 
   if (a === 0) {
-    factored.textContent = "No real factorization";
+    factored.textContent = "Not a cubic (a = 0)";
     return;
   }
 
@@ -178,10 +178,24 @@ function factoredForm() {
   const dis = (q / 2) ** 2 + (p / 3) ** 3;
 
   function formatFactor(x: number) {
-    if (x < 0) {
-      return `(x + ${Math.abs(x).toFixed(4)})`;
+    const rounded = Number(x.toFixed(4));
+
+    if (rounded === 0) {
+      return "(x)";
     }
-    return `(x - ${x.toFixed(4)})`;
+
+    if (rounded < 0) {
+      return `(x + ${Math.abs(rounded).toFixed(4)})`;
+    }
+
+    return `(x - ${rounded.toFixed(4)})`;
+  }
+
+  function formatTerm(value: number, variable: string) {
+    const rounded = Number(value.toFixed(4));
+    const sign = rounded < 0 ? "-" : "+";
+
+    return `${sign} ${Math.abs(rounded).toFixed(4)}${variable}`;
   }
 
   if (dis < 0) {
@@ -203,9 +217,9 @@ function factoredForm() {
     const x = u + v - b / (3 * a);
 
     const quadraticB = b / a + x;
-    const quadraticC = -d / (a * x);
+    const quadraticC = c / a + (b / a) * x + x ** 2;
 
-    factored.textContent = `${a}${formatFactor(x)}(x² + ${quadraticB.toFixed(4)}x + ${quadraticC.toFixed(4)})`;
+    factored.textContent = `${a}${formatFactor(x)}(x² ${formatTerm(quadraticB, "x")} ${formatTerm(quadraticC, "")})`;
   } else {
     if (p === 0 && q === 0) {
       const x = -b / (3 * a);
@@ -213,10 +227,11 @@ function factoredForm() {
       factored.textContent = `${a}${formatFactor(x)}³`;
     } else {
       const u = Math.cbrt(-q / 2);
-      const x1 = 2 * u - b / (3 * a);
-      const x2 = -u - b / (3 * a);
 
-      factored.textContent = `${a}${formatFactor(x1)}²${formatFactor(x2)}`;
+      const doubleRoot = -u - b / (3 * a);
+      const singleRoot = 2 * u - b / (3 * a);
+
+      factored.textContent = `${a}${formatFactor(doubleRoot)}²${formatFactor(singleRoot)}`;
     }
   }
 }
